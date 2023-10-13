@@ -9,7 +9,7 @@ from os.path import isfile
 from ffmpeg import FFmpeg
 
 st.set_page_config(
-    page_title="URL 도구상자",
+    page_title="URL 도구",
     layout="centered",
     initial_sidebar_state="collapsed",
     menu_items={
