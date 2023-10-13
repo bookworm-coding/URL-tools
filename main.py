@@ -13,11 +13,16 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="collapsed",
     menu_items={
-        'Get Help': None,
-        'Report a bug': None,
-        'About': "This app is made by [bookworm-coding](https://github.com/bookworm-coding)"
+        'About': "This app is made by [bookworm-coding](https://github.com/bookworm-coding/URL_tools)"
     }
 )
+
+hide_streamlit_style = """
+            <style>
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 st.title('URL 도구')
 
