@@ -30,7 +30,7 @@ def url_shorten():
     if url == "" or url is None:
         st.error("URL을 입력해주세요!")
         return
-    response = get("https://vo.la/api/?key="+st.secrets["API key"]+"&url=" + url)
+    response = get("https://vo.la/api/?key="+st.secrets["API_key"]+"&url=" + url)
     data = response.json()
     st.info("단축된 URL : " + data["short"])
     return
