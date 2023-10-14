@@ -7,6 +7,8 @@ import yt_dlp as yt
 from os import remove
 from os.path import isfile
 from ffmpeg import FFmpeg
+import webvtt
+from subprocess import call
 
 st.set_page_config(
     page_title="URL 도구",
@@ -35,7 +37,7 @@ def url_shorten():
     if url == "" or url is None:
         st.error("URL을 입력해주세요!")
         return
-    response = get("https://vo.la/api/?key="+st.secrets["API_key"]+"&url=" + url)
+    response = get("https://vo.la/api/?key=" + st.secrets["API_key"] + "&url=" + url)
     data = response.json()
     st.info("단축된 URL : " + data["short"])
     return
@@ -144,8 +146,21 @@ def video():
     return
 
 
+def subtitle():
+    call(['yt-dlp', '-ciw', '-q', '--skip-download', '--write-sub', '--sub-lang', 'ko', '-o', 'temp', str(url)])
+    while not isfile("temp.ko.vtt"):
+        pass
+    text = "> "
+    for caption in webvtt.read('temp.ko.vtt'):
+        text += caption.text
+        text += "<br/>"
+    st.markdown(text, unsafe_allow_html=True)
+    remove("temp.ko.vtt")
+    return
+
+
 url = st.text_input("URL을 입력하세요")
-col1, col2, col3, col4 = st.columns([4, 5, 6, 6])
+col1, col2, col3, col4, col5 = st.columns([4, 5, 6, 6, 6])
 with col1:
     button1 = st.button("URL 단축하기", on_click=url_shorten)
 with col2:
@@ -154,3 +169,5 @@ with col3:
     button3 = st.button("유튜브 동영상 다운로드", on_click=video)
 with col4:
     button4 = st.button("유튜브 오디오 다운로드", on_click=audio)
+with col5:
+    button5 = st.button("유튜브 자막 스크립트 다운로드", on_click=subtitle)

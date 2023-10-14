@@ -1,5 +1,6 @@
 python_ffmpeg
 qrcode
-Requests
+requests
 streamlit
+webvtt_py
 yt_dlp
