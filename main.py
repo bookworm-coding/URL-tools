@@ -51,8 +51,7 @@ def qr_code():
     q = qr.make(url)
     st.image(q.get_image())
     q.save("qrcode.png")
-    with open("qrcode.png", "rb") as file:
-        st.download_button("QR코드 PNG 다운로드", file, "QRcode.png", "image/png")
+    st.download_button("QR코드 PNG 다운로드", open("qrcode.png", "rb").read(), "QRcode.png", "image/png")
     remove("qrcode.png")
     return
 
@@ -97,7 +96,7 @@ def audio():
     status.update(label="다운로드 완료", state="complete", expanded=False)
     st.audio("temp.wav")
     remove("temp.wav")
-    st.download_button("다운로드", data=open(filename, "rb"), file_name=filename, mime="audio/mpeg", on_click=rm)
+    st.download_button("다운로드", data=open(filename, "rb").read(), file_name=filename, mime="audio/mpeg", on_click=rm)
     return
 
 
@@ -146,7 +145,7 @@ def video():
     bar.empty()
     status.update(label="다운로드 완료", state="complete", expanded=False)
     st.video(data=filename)
-    st.download_button("다운로드", data=open(filename, "rb"), file_name=filename, mime="video/mp4", on_click=rm)
+    st.download_button("다운로드", data=open(filename, "rb").read(), file_name=filename, mime="video/mp4", on_click=rm)
     remove(filename)
     return
 
