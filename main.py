@@ -92,7 +92,8 @@ def audio():
     status.update(label="다운로드 완료", state="complete", expanded=False)
     st.audio("temp.wav")
     remove("temp.wav")
-    st.download_button("다운로드", data=filename, file_name=filename, mime="audio/mpeg", on_click=st.empty)
+    with open(filename, "rb") as f:
+        st.download_button("다운로드", data=f, file_name=filename, mime="audio/mpeg", on_click=st.empty)
     remove(filename)
     return
 
@@ -142,7 +143,8 @@ def video():
     bar.empty()
     status.update(label="다운로드 완료", state="complete", expanded=False)
     st.video(data=filename)
-    st.download_button("다운로드", data=filename, file_name=filename, mime="video/mp4", on_click=st.empty)
+    with open(filename, mode="rb") as f:
+        st.download_button("다운로드", data=f, file_name=filename, mime="video/mp4", on_click=st.empty)
     remove(filename)
     return
 
