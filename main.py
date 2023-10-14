@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-
 from requests import get
 import streamlit as st
 import qrcode as qr
@@ -12,12 +11,14 @@ from subprocess import call
 
 st.set_page_config(
     page_title="URL 도구",
-    layout="centered",
+    layout="wide",
     initial_sidebar_state="collapsed",
     menu_items={
         'About': "This app is made by [bookworm-coding](https://github.com/bookworm-coding/URL_tools)"
     }
 )
+
+ct = st.container()
 
 hide_streamlit_style = """
             <style>
@@ -26,7 +27,7 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-st.title('URL 도구')
+ct.title('URL 도구')
 
 bar = None
 status = None
@@ -35,7 +36,7 @@ filename: str = ""
 
 def url_shorten():
     if url == "" or url is None:
-        st.error("URL을 입력해주세요!")
+        ct.error("URL을 입력해주세요!")
         return
     response = get("https://vo.la/api/?key=" + st.secrets["API_key"] + "&url=" + url)
     data = response.json()
@@ -58,8 +59,8 @@ def qr_code():
 
 def audio():
     global bar, filename, status
-    bar = st.progress(0, text="파일 준비 중입니다...잠시만 기다려주세요...")
-    status = st.status(label="파일 준비 중입니다...잠시만 기다려주세요...", expanded=True)
+    bar = ct.progress(0, text="파일 준비 중입니다...잠시만 기다려주세요...")
+    status = ct.status(label="파일 준비 중입니다...잠시만 기다려주세요...", expanded=True)
 
     ydl_opts = {
         'ignoreerrors': True,
@@ -115,8 +116,8 @@ def hook(d):
 
 def video():
     global bar, filename, status
-    bar = st.progress(0, text="파일 준비 중입니다...잠시만 기다려주세요...")
-    status = st.status(label="파일 준비 중입니다...잠시만 기다려주세요...", expanded=True)
+    bar = ct.progress(0, text="파일 준비 중입니다...잠시만 기다려주세요...")
+    status = ct.status(label="파일 준비 중입니다...잠시만 기다려주세요...", expanded=True)
 
     ydl_opts = {
         'ignoreerrors': True,
@@ -155,19 +156,20 @@ def subtitle():
         text += caption.text
         text += "<br/>"
     st.markdown(text, unsafe_allow_html=True)
+    st.download_button(label="다운로드", data=text, file_name="스크립트.txt", mime="text/plain")
     remove("temp.ko.vtt")
     return
 
 
 url = st.text_input("URL을 입력하세요")
-col1, col2, col3, col4, col5 = st.columns([4, 5, 6, 6, 6])
+col1, col2, col3, col4, col5 = st.columns([3.5, 4, 5, 5, 6])
 with col1:
-    button1 = st.button("URL 단축하기", on_click=url_shorten)
+    button1 = st.button("URL 단축하기", on_click=url_shorten, use_container_width=True)
 with col2:
-    button2 = st.button("QR코드 생성하기", on_click=qr_code)
+    button2 = st.button("QR코드 생성하기", on_click=qr_code, use_container_width=True)
 with col3:
-    button3 = st.button("유튜브 동영상 다운로드", on_click=video)
+    button3 = st.button("유튜브 동영상 다운로드", on_click=video, use_container_width=True)
 with col4:
-    button4 = st.button("유튜브 오디오 다운로드", on_click=audio)
+    button4 = st.button("유튜브 오디오 다운로드", on_click=audio, use_container_width=True)
 with col5:
-    button5 = st.button("유튜브 자막 스크립트 다운로드", on_click=subtitle)
+    button5 = st.button("유튜브 자막 스크립트 다운로드", on_click=subtitle, use_container_width=True)
