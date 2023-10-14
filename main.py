@@ -36,7 +36,7 @@ filename: str = ""
 
 def url_shorten():
     if url == "" or url is None:
-        ct.error("URL을 입력해주세요!")
+        st.error("URL을 입력해주세요!")
         return
     response = get("https://vo.la/api/?key=" + st.secrets["API_key"] + "&url=" + url)
     data = response.json()
@@ -59,8 +59,8 @@ def qr_code():
 
 def audio():
     global bar, filename, status
-    bar = ct.progress(0, text="파일 준비 중입니다...잠시만 기다려주세요...")
-    status = ct.status(label="파일 준비 중입니다...잠시만 기다려주세요...", expanded=True)
+    bar = st.progress(0, text="파일 준비 중입니다...잠시만 기다려주세요...")
+    status = st.status(label="파일 준비 중입니다...잠시만 기다려주세요...", expanded=True)
 
     ydl_opts = {
         'ignoreerrors': True,
@@ -116,8 +116,8 @@ def hook(d):
 
 def video():
     global bar, filename, status
-    bar = ct.progress(0, text="파일 준비 중입니다...잠시만 기다려주세요...")
-    status = ct.status(label="파일 준비 중입니다...잠시만 기다려주세요...", expanded=True)
+    bar = st.progress(0, text="파일 준비 중입니다...잠시만 기다려주세요...")
+    status = st.status(label="파일 준비 중입니다...잠시만 기다려주세요...", expanded=True)
 
     ydl_opts = {
         'ignoreerrors': True,
@@ -161,7 +161,7 @@ def subtitle():
     return
 
 
-url = st.text_input("URL을 입력하세요")
+url = ct.text_input("URL을 입력하세요")
 col1, col2, col3, col4, col5 = st.columns([3.5, 4, 5, 5, 6])
 with col1:
     button1 = st.button("URL 단축하기", on_click=url_shorten, use_container_width=True)
