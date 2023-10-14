@@ -57,6 +57,11 @@ def qr_code():
     return
 
 
+def rm():
+    global filename
+    remove(filename)
+    st.empty()
+
 def audio():
     global bar, filename, status
     bar = st.progress(0, text="파일 준비 중입니다...잠시만 기다려주세요...")
@@ -92,8 +97,7 @@ def audio():
     status.update(label="다운로드 완료", state="complete", expanded=False)
     st.audio("temp.wav")
     remove("temp.wav")
-    st.download_button("다운로드", data=open(filename, "rb"), file_name=filename, mime="audio/mpeg", on_click=st.empty)
-    remove(filename)
+    st.download_button("다운로드", data=open(filename, "rb"), file_name=filename, mime="audio/mpeg", on_click=rm)
     return
 
 
@@ -142,7 +146,7 @@ def video():
     bar.empty()
     status.update(label="다운로드 완료", state="complete", expanded=False)
     st.video(data=filename)
-    st.download_button("다운로드", data=open(filename, "rb"), file_name=filename, mime="video/mp4", on_click=st.empty)
+    st.download_button("다운로드", data=open(filename, "rb"), file_name=filename, mime="video/mp4", on_click=rm)
     remove(filename)
     return
 
@@ -152,11 +156,14 @@ def subtitle():
     while not isfile("temp.ko.vtt"):
         pass
     text = "> "
+    filetext = ""
     for caption in webvtt.read('temp.ko.vtt'):
         text += caption.text
+        filetext += caption.text
         text += "<br/>"
+        filetext += "\n"
     st.markdown(text, unsafe_allow_html=True)
-    st.download_button(label="다운로드", data=text, file_name="스크립트.txt", mime="text/plain")
+    st.download_button(label="다운로드", data=filetext, file_name="스크립트.txt", mime="text/plain")
     remove("temp.ko.vtt")
     return
 
