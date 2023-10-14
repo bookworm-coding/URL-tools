@@ -152,11 +152,14 @@ def subtitle():
     while not isfile("temp.ko.vtt"):
         pass
     text = "> "
+    filetext = ""
     for caption in webvtt.read('temp.ko.vtt'):
         text += caption.text
+        filetext += caption.text
         text += "<br/>"
+        filetext += "\n"
     st.markdown(text, unsafe_allow_html=True)
-    st.download_button(label="다운로드", data=text, file_name="스크립트.txt", mime="text/plain")
+    st.download_button(label="다운로드", data=filetext, file_name="스크립트.txt", mime="text/plain")
     remove("temp.ko.vtt")
     return
 
