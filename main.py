@@ -13,9 +13,6 @@ st.set_page_config(
     page_title="URL 도구",
     layout="wide",
     initial_sidebar_state="collapsed",
-    menu_items={
-        'About': "This app is made by [bookworm-coding](https://github.com/bookworm-coding/URL_tools)"
-    }
 )
 
 ct = st.container()
@@ -38,9 +35,9 @@ def url_shorten():
     if url == "" or url is None:
         st.error("URL을 입력해주세요!")
         return
-    response = get("https://vo.la/api/?key=" + st.secrets["API_key"] + "&url=" + url)
+    response = get("https://api.lrl.kr/v5/url/short?key=" + st.secrets["API_key"] + "&url=" + url)
     data = response.json()
-    st.info("단축된 URL : " + data["short"])
+    st.info("단축된 URL : " + data['result']['url'])
     return
 
 
