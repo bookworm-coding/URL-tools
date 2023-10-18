@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from requests import get
+from requests import post
 import streamlit as st
 import qrcode as qr
 import yt_dlp as yt
@@ -35,9 +35,10 @@ def url_shorten():
     if url == "" or url is None:
         st.error("URL을 입력해주세요!")
         return
-    response = get("https://api.lrl.kr/v5/url/short?key=" + st.secrets["API_key"] + "&url=" + url)
+    response = post(url="http://www.buly.kr/api/shoturl.siso", data={"customer_id" : st.secrets["ID"], "partner_api_id" : st.secrets["API_key"], "org_url":url})
     data = response.json()
-    st.info("단축된 URL : " + data['result']['url'])
+    print(data)
+    st.info("단축된 URL : " + data['url'])
     return
 
 
