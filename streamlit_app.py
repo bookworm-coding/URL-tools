@@ -55,6 +55,9 @@ def rm():
 
 
 def audio():
+    if url == "" or url is None:
+        st.error("URL을 입력해주세요!")
+        return
     global bar, filename, status
     bar = st.progress(0, text="파일 준비 중입니다...잠시만 기다려주세요...")
     status = st.status(label="파일 준비 중입니다...잠시만 기다려주세요...", expanded=True)
@@ -110,6 +113,9 @@ def hook(d):
 
 
 def video():
+    if url == "" or url is None:
+        st.error("URL을 입력해주세요!")
+        return
     global bar, filename, status
     bar = st.progress(0, text="파일 준비 중입니다...잠시만 기다려주세요...")
     status = st.status(label="파일 준비 중입니다...잠시만 기다려주세요...", expanded=True)
@@ -142,6 +148,9 @@ def video():
 
 
 def subtitle():
+    if url == "" or url is None:
+        st.error("URL을 입력해주세요!")
+        return
     call(['yt-dlp', '-ciw', '-q', '--skip-download', '--write-sub', '--sub-lang', 'ko', '-o', 'temp', str(url)])
     while not isfile("temp.ko.vtt"):
         pass
