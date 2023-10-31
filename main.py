@@ -28,7 +28,8 @@ def url_shorten():
     if url == "" or url is None:
         st.error("URL을 입력해주세요!")
         return
-    response = post(url="http://www.buly.kr/api/shoturl.siso", data={"customer_id" : st.secrets["ID"], "partner_api_id" : st.secrets["API_key"], "org_url":url})
+    response = post(url="http://www.buly.kr/api/shoturl.siso",
+                    data={"customer_id": st.secrets["ID"], "partner_api_id": st.secrets["API_key"], "org_url": url})
     data = response.json()
     print(data)
     st.info("단축된 URL : " + data['url'])
@@ -51,6 +52,7 @@ def rm():
     global filename
     remove(filename)
     st.empty()
+
 
 def audio():
     global bar, filename, status
@@ -86,7 +88,6 @@ def audio():
     bar.empty()
     status.update(label="다운로드 완료", state="complete", expanded=False)
     st.audio("temp.wav")
-    remove("temp.wav")
     st.download_button("다운로드", data=open(filename, "rb").read(), file_name=filename, mime="audio/mpeg", on_click=rm)
     return
 
@@ -137,7 +138,6 @@ def video():
     status.update(label="다운로드 완료", state="complete", expanded=False)
     st.video(data=filename)
     st.download_button("다운로드", data=open(filename, "rb").read(), file_name=filename, mime="video/mp4", on_click=rm)
-    remove(filename)
     return
 
 
