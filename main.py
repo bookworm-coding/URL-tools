@@ -17,13 +17,6 @@ st.set_page_config(
 
 ct = st.container()
 
-hide_streamlit_style = """
-            <style>
-            footer {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
 ct.title('URL 도구')
 
 bar = None
