@@ -174,8 +174,8 @@ with col1:
 with col2:
     button2 = st.button("QR코드 생성하기", on_click=qr_code, use_container_width=True)
 with col3:
-    button3 = st.button("유튜브 동영상 다운로드", on_click=video, use_container_width=True)
+    button3 = st.button("유튜브 동영상 다운로드", on_click=video, use_container_width=True, disabled=True)
 with col4:
-    button4 = st.button("유튜브 오디오 다운로드", on_click=audio, use_container_width=True)
+    button4 = st.button("유튜브 오디오 다운로드", on_click=audio, use_container_width=True, disabled=True)
 with col5:
     button5 = st.button("유튜브 자막 스크립트 다운로드", on_click=subtitle, use_container_width=True)
