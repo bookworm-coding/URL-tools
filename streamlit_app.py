@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
 from requests import post
 import streamlit as st
-import qrcode as qr
+from qrcode.main import QRCode
+from qrcode import ERROR_CORRECT_H
 import yt_dlp as yt
 from os import remove
 from os.path import isfile
@@ -40,9 +41,18 @@ def qr_code():
     if url == "" or url is None:
         st.error("URL을 입력해주세요!")
         return
-    q = qr.make(url)
-    st.image(q.get_image())
-    q.save("qrcode.png")
+    q = QRCode(
+        version=1,
+        error_correction=ERROR_CORRECT_H,
+        box_size=10,
+        border=4,
+    )
+    q.add_data(url)
+    q.make(fit=True)
+    img = q.make_image(fill_color="black", back_color="transparent")
+
+    st.image(img.get_image())
+    img.save("qrcode.png")
     st.download_button("QR코드 PNG 다운로드", open("qrcode.png", "rb").read(), "QRcode.png", "image/png")
     remove("qrcode.png")
     return
